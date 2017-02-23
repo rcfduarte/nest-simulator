@@ -166,6 +166,8 @@ private:
     size_t num_vars_;  //!< number of variables recorded
 
     Time recording_interval_; //!< interval between two recordings
+    // TODO @NMT added origin variable
+    Time recording_origin_;   //!< origin relative to which interval is calculated
     long rec_int_steps_;      //!< interval in steps
     long next_rec_step_;      //!< next time step at which to record
 
@@ -236,6 +238,7 @@ nest::UniversalDataLogger< HostNode >::connect_logging_device(
   return data_loggers_.size();
 }
 
+// TODO @NMT added intializer
 template < typename HostNode >
 nest::UniversalDataLogger< HostNode >::DataLogger_::DataLogger_(
   const DataLoggingRequest& req,
@@ -243,6 +246,7 @@ nest::UniversalDataLogger< HostNode >::DataLogger_::DataLogger_(
   : multimeter_( req.get_sender().get_gid() )
   , num_vars_( 0 )
   , recording_interval_( Time::neg_inf() )
+  , recording_origin_( Time::ms(0.) )
   , rec_int_steps_( 0 )
   , next_rec_step_( -1 )
   , // flag as uninitialized
@@ -278,6 +282,8 @@ nest::UniversalDataLogger< HostNode >::DataLogger_::DataLogger_(
       "recording interval must be >= resolution." );
 
   recording_interval_ = req.get_recording_interval();
+  // TODO @NMT get origin value
+  recording_origin_ = req.get_recording_origin();
 }
 }
 

@@ -84,6 +84,7 @@
 #include "ac_generator.h"
 #include "dc_generator.h"
 #include "gamma_sup_generator.h"
+//#include "inh_poisson_generator.h"
 #include "mip_generator.h"
 #include "noise_generator.h"
 #include "poisson_generator.h"
@@ -208,6 +209,8 @@ ModelsModule::init( SLIInterpreter* )
     "spike_generator" );
   kernel().model_manager.register_node_model< poisson_generator >(
     "poisson_generator" );
+  //kernel().model_manager.register_node_model< inh_poisson_generator >(
+  //  "inh_poisson_generator" );
   kernel().model_manager.register_node_model< pulsepacket_generator >(
     "pulsepacket_generator" );
   kernel().model_manager.register_node_model< noise_generator >(

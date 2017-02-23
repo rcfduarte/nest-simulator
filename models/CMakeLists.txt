@@ -58,6 +58,7 @@ set( models_sources
     iaf_psc_delta.h iaf_psc_delta.cpp
     iaf_psc_exp.h iaf_psc_exp.cpp
     iaf_tum_2000.h iaf_tum_2000.cpp
+    #inh_poisson_generator.h inh_poisson_generator.cpp
     izhikevich.h izhikevich.cpp
     mat2_psc_exp.h mat2_psc_exp.cpp
     mcculloch_pitts_neuron.h mcculloch_pitts_neuron.cpp

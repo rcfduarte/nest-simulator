@@ -556,6 +556,8 @@ public:
 
   /** Create event for given time stamp and vector of recordables. */
   DataLoggingRequest( const Time&, const std::vector< Name >& );
+  // TODO @NMT declare constructor with 3 arguments
+  DataLoggingRequest( const Time&, const Time&, const std::vector< Name >& );
 
   DataLoggingRequest* clone() const;
 
@@ -563,6 +565,10 @@ public:
 
   /** Access to stored time interval.*/
   const Time& get_recording_interval() const;
+  
+  // TODO @NMT declare getter
+  /** Access to stored time interval.*/
+  const Time& get_recording_origin() const;
 
   /** Access to vector of recordables. */
   const std::vector< Name >& record_from() const;
@@ -570,6 +576,7 @@ public:
 private:
   //! Interval between two recordings, first is step 1
   Time recording_interval_;
+  Time recording_origin_; // TODO @NMT variable for origin here
 
   /**
    * Names of properties to record from.
@@ -579,9 +586,11 @@ private:
   std::vector< Name > const* const record_from_;
 };
 
+// TODO @NMT added new constructor here with origin
 inline DataLoggingRequest::DataLoggingRequest()
   : Event()
   , recording_interval_( Time::neg_inf() )
+  , recording_origin_ ( Time::ms(0.) )
   , record_from_( 0 )
 {
 }
@@ -593,6 +602,19 @@ inline DataLoggingRequest::DataLoggingRequest( const Time& rec_int,
   , record_from_( &recs )
 {
 }
+
+// TODO @NMT added additional constructor here with 3 arguments, didn't want 
+// to mess up other calls with only 2 arguments.
+inline DataLoggingRequest::DataLoggingRequest( const Time& rec_int,
+  const Time& rec_org,
+  const std::vector< Name >& recs )
+  : Event()
+  , recording_interval_( rec_int )
+  , recording_origin_( rec_org )
+  , record_from_( &recs )
+{
+}
+
 
 inline DataLoggingRequest*
 DataLoggingRequest::clone() const
@@ -608,6 +630,17 @@ DataLoggingRequest::get_recording_interval() const
   assert( recording_interval_.is_finite() );
 
   return recording_interval_;
+}
+
+// TODO @NMT new get function for origin
+inline const Time&
+DataLoggingRequest::get_recording_origin() const
+{
+  // During simulation, events are created without recording interval
+  // information. On these, get_recording_interval() must not be called.
+  assert( recording_origin_.is_finite() );
+
+  return recording_origin_;
 }
 
 inline const std::vector< Name >&
